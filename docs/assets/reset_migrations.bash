@@ -1,7 +1,8 @@
+
 rm -R -f ./migrations &&
 pipenv run init &&
-dropdb -h localhost -U gitpod example || true &&
-createdb -h localhost -U gitpod example || true &&
-psql -h localhost example -U gitpod -c 'CREATE EXTENSION unaccent;' || true &&
+psql -U gitpod -c 'DROP DATABASE example;' || true &&
+psql -U gitpod -c 'CREATE DATABASE example;' &&
+psql -U gitpod -c 'CREATE EXTENSION unaccent;' -d example &&
 pipenv run migrate &&
 pipenv run upgrade
